@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="ChatClient" default="compile" basedir=".">    <property name="src.dir" location="src"/>
+    <property name="build.dir" location="build"/>
+    <property name="lib.dir" location="../serveur/lib"/>
+    <property name="local.lib.dir" location="lib"/>    <path id="classpath">
+        <fileset dir="${lib.dir}">
+            <include name="*.jar"/>
+        </fileset>
+        <fileset dir="${local.lib.dir}">
+            <include name="*.jar"/>
+        </fileset>
+    </path>
+
+    <target name="init">
+        <mkdir dir="${build.dir}"/>
+    </target>    <target name="compile" depends="init" description="Compile the source code">
+        <javac srcdir="${src.dir}" destdir="${build.dir}" includeantruntime="false">
+            <classpath refid="classpath"/>
+            <exclude name="com/example/chat/Client.java"/>
+            <exclude name="com/example/chat/SwingClient.java"/>
+            <exclude name="com/example/chat/client/**"/>
+        </javac>
+
+    </target>
+    <target name="run" depends="compile" description="Run the simple console client">
+        <java classname="com.example.chat.SimpleClient" fork="true">
+            <classpath>
+                <path refid="classpath"/>
+                <pathelement location="${build.dir}"/>
+            </classpath>
+        </java>
+    </target>
+
+    <target name="run-gui" depends="compile" description="Run the simple graphical client">
+        <java classname="com.example.chat.SimpleSwingClient" fork="true">
+            <classpath>
+                <path refid="classpath"/>
+                <pathelement location="${build.dir}"/>
+            </classpath>
+        </java>
+    </target>
+
+    <target name="clean" description="Clean the build directory">
+        <delete dir="${build.dir}"/>
+    </target>
+</project>

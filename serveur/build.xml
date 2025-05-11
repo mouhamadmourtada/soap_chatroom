@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="ChatSOAP" basedir="." default="run">
+    <property name="src" value="src"/>
+    <property name="build" value="bin"/>
+    <property name="lib" value="lib"/>
+
+    <path id="classpath">
+        <fileset dir="${lib}">
+            <include name="*.jar"/>
+        </fileset>
+    </path>
+
+    <target name="clean">
+        <delete dir="${build}"/>
+    </target>
+
+    <target name="compile" depends="clean">
+        <mkdir dir="${build}"/>
+        <javac srcdir="${src}" destdir="${build}" includeantruntime="false">
+            <classpath refid="classpath"/>
+        </javac>
+    </target>    
+    <target name="run" depends="compile">
+        <java classname="com.example.chat.ChatPublisher" classpath="${build}" fork="true">
+            <classpath refid="classpath"/>
+            <jvmarg value="--add-modules=jdk.httpserver"/>
+        </java>
+    </target>
+</project>
