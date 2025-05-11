@@ -16,23 +16,12 @@
     </target>    <target name="compile" depends="init" description="Compile the source code">
         <javac srcdir="${src.dir}" destdir="${build.dir}" includeantruntime="false">
             <classpath refid="classpath"/>
-            <exclude name="com/example/chat/Client.java"/>
-            <exclude name="com/example/chat/SwingClient.java"/>
             <exclude name="com/example/chat/client/**"/>
         </javac>
-
-    </target>
-    <target name="run" depends="compile" description="Run the simple console client">
-        <java classname="com.example.chat.SimpleClient" fork="true">
-            <classpath>
-                <path refid="classpath"/>
-                <pathelement location="${build.dir}"/>
-            </classpath>
-        </java>
     </target>
 
-    <target name="run-gui" depends="compile" description="Run the simple graphical client">
-        <java classname="com.example.chat.SimpleSwingClient" fork="true">
+    <target name="run" depends="compile" description="Run the chat client GUI">
+        <java classname="com.example.chat.JakartaSwingClient" fork="true">
             <classpath>
                 <path refid="classpath"/>
                 <pathelement location="${build.dir}"/>
